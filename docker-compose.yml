@@ -1,0 +1,90 @@
+version: "3.3"
+# This is Docker-compose for development and staging. Its goals are to permit simple setup for a developer, where the only local tool required is docker-compose,
+# as well as supporting the same talentcloud application Dockerfile for development and production.
+
+services:
+    # talentcloud operations. Bootstraps the environment if required (no .setup file is present). Combines application logs into stderr and stout.
+    talentcloud-op:
+        build:
+            context: .
+            dockerfile: op/Dockerfile
+        image: talentcloud-op
+        container_name: talentcloud-op
+        working_dir: /opt/TalentCloud/var/www
+        #        restart: always
+        volumes:
+            - "./etc/ssl:/opt/TalentCloud/etc/ssl"
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+            - "./TalentCloud/:/opt/TalentCloud/var/www"
+            - "logs:/var/log"
+            - "./op/Makefile:/opt/TalentCloud/var/www/Makefile:ro"
+            - "./op/op-assert.sh:/opt/TalentCloud/var/www/op-assert.sh:ro"
+            - "./op/.env.example:/opt/TalentCloud/.env.example:ro"
+        environment:
+            - "DB_PORT=5432"
+            - "DB_HOST=postgres"
+    # The TalentCloud application (PHP-FPM)
+    talentcloud:
+        image: php:7.2-fpm-alpine3.7
+        #        build:
+        #            context: TalentCloud
+        #            dockerfile: Dockerfile
+        #image: gctcntgc/talentcloud
+        #        image: tc2_gctcntgc/talentcloud
+        #        container_name: talentcloud
+        working_dir: /var/www
+        #        restart: always
+        volumes:
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro"
+            - "./etc/php-fpm.d/zz-logs.conf:/usr/local/etc/php-fpm.d/zz-logs.conf:ro"
+            - "./TalentCloud/:/var/www"
+            - "logs:/var/log"
+        depends_on:
+            - talentcloud-op
+        environment:
+            - "DB_PORT=5432"
+            - "DB_HOST=postgres"
+        ports:
+            - "9000:9000"
+    # The web server (nginx)
+    nginx:
+        image: nginx:1.13.9-alpine
+        container_name: nginx
+        working_dir: /var/www
+        restart: always
+        volumes:
+            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+            - "./etc/ssl:/etc/ssl"
+            - "./TalentCloud/:/var/www"
+            - "logs:/var/log"
+        depends_on:
+            - talentcloud
+        ports:
+            - "80:80"
+            - "443:443"
+    # The database (Postgres)
+    postgres:
+        image: postgres:9.6-alpine
+        container_name: postgres
+        restart: always
+        volumes:
+            - "pgdata:/var/lib/postgresql/data"
+            - "logs:/var/log"
+        environment:
+            - "POSTGRES_DB=talentcloud"
+            - "POSTGRES_USER=talentcloud"
+            - "POSTGRES_PASSWORD=talentcloud"
+        ports:
+            - "5434-5432"
+    # Adminer
+    #    adminer:
+    #    image: adminer
+    #    container_name: adminer
+    #    restart: always
+    #    links:
+    #        - postgres
+    #    ports:
+    #        - "8080:8080"
+volumes:
+    pgdata:
+    logs:
