@@ -1,3 +1,9 @@
-# DEBUGGING normally this isn't required
 FROM php:7.2-fpm-alpine3.7
+RUN apk update && apk upgrade && \
+  docker-php-source extract && \
+  # transitory packages
+  apk add --no-cache --virtual .build-dependencies \
+  postgresql-dev && \
+  docker-php-ext-install pgsql pdo_pgsql
+
 CMD ["./wait-for-setup.sh", "php-fpm"]
