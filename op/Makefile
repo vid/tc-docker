@@ -13,7 +13,7 @@ clean:
 	rm -Rf report/*
 
 env:
-	cp /opt/TalentCloud/.env.example ${APP}/var/www/.env
+	cp /opt/TalentCloud/.env.example ${APPROOT}/var/www/.env
 
 code-sniff:
 	./vendor/bin/phpcs --config-set ignore_errors_on_exit 1
