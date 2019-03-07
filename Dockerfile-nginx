@@ -1,0 +1,3 @@
+FROM nginx:1.13.9-alpine
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+CMD ["./wait-for-setup.sh", "nginx"]
