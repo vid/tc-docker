@@ -25,17 +25,20 @@ services:
             - "DB_HOST=postgres"
     # The TalentCloud application (PHP-FPM)
     talentcloud:
-        image: php:7.2-fpm-alpine3.7
-        #        build:
-        #            context: TalentCloud
-        #            dockerfile: Dockerfile
+        # DEBUGGING normally this container can just use the image
+        #        image: php:7.2-fpm-alpine3.7
+        build:
+            context: .
+            dockerfile: Dockerfile-talentcloud
         #image: gctcntgc/talentcloud
         #        image: tc2_gctcntgc/talentcloud
         #        container_name: talentcloud
-        working_dir: /var/www
+        #working_dir: /var/www
+        working_dir: /opt/TalentCloud
         #        restart: always
         volumes:
-            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini:ro"
+            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini:rw"
             - "./etc/php-fpm.d/zz-logs.conf:/usr/local/etc/php-fpm.d/zz-logs.conf:ro"
             - "./TalentCloud/:/var/www"
             - "logs:/var/log"
@@ -63,6 +66,8 @@ services:
             - "logs:/var/log"
         depends_on:
             - talentcloud
+        links:
+            - talentcloud
         ports:
             - "80:80"
             - "443:443"
@@ -70,7 +75,6 @@ services:
     postgres:
         image: postgres:9.6-alpine
         working_dir: /opt/TalentCloud
-        container_name: postgres-setup
         restart: always
         volumes:
             - "pgdata:/var/lib/postgresql/data"
