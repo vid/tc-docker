@@ -87,14 +87,14 @@ services:
         ports:
             - "5434-5432"
     # Adminer
-    #    adminer:
-    #    image: adminer
-    #    container_name: adminer
-    #    restart: always
-    #    links:
-    #        - postgres
-    #    ports:
-    #        - "8080:8080"
+    adminer:
+        image: adminer
+        container_name: adminer
+        restart: always
+        links:
+            - postgres
+        ports:
+            - "8080:8080"
 volumes:
     pgdata:
     logs:
