@@ -94,7 +94,7 @@ services:
         links:
             - postgres
         ports:
-            - "8080:8080"
+            - "8060:8080"
 volumes:
     pgdata:
     logs:

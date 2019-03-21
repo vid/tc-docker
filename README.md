@@ -20,7 +20,8 @@ Make a hosts entry for talent.local.ca that points to localhost, you should then
 
 ## Components
 
-* nginx (front-end); ports 80 443
+* nginx (front-end) exposed on ports 80, 443
 * talentcloud-op: asserts environment and used for ongoing development
 * talentcloud: the php-fpm application
 * Postgres
+* adminer exposed on port 8060
