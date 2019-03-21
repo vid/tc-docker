@@ -8,10 +8,12 @@ else
   if [ ! -d /var/log/nginx ]; then
     mkdir /var/log/nginx/
   fi && \
+  # FIXME commands other than gen-certs should be run as non-root user
   make gen-certs env composer-install laravel-init fresh-db fake-data npm-install npm-dev && \
-  # FIXME this should use nginx UUID
-  chmod -R 777 $BASE/bootstrap/cache && \
-  chmod -R 777 $BASE/storage && \
+  for i in storage bootstrap/cache; do
+    chgrp -R www-data $BASE/$i && \
+    chmod -R g+rxws $BASE/$i
+  done
   date > $BASE/.setup
 fi
 
