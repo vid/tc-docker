@@ -18,7 +18,7 @@ services:
             - "./TalentCloud/:/opt/TalentCloud/var/www"
             - "logs:/var/log"
             - "./op/Makefile:/opt/TalentCloud/var/www/Makefile:ro"
-            - "./op/op-assert.sh:/opt/TalentCloud/var/www/op-assert.sh:ro"
+            - "./op/op-assert.sh:/opt/TalentCloud/op-assert.sh:ro"
             - "./op/.env.example:/opt/TalentCloud/.env.example:ro"
         environment:
             - "DB_PORT=5432"

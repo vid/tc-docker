@@ -31,5 +31,5 @@ RUN apk update && apk upgrade && \
   rm -rf /var/cache/apk/*
 
 WORKDIR /var/www
-CMD sh -x ./op-assert.sh
+CMD sh -x /opt/TalentCloud/op-assert.sh
 
