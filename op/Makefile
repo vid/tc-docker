@@ -30,7 +30,7 @@ npm-install-no-bin-links:
 	npm install --no-bin-links
 
 npm-install:
-	npm install --no-bin-links
+	npm install
 
 npm-dev:
 	npm run dev
