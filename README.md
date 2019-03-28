@@ -17,8 +17,8 @@ $ docker-compose up
 
 Note a single branch deploy may not be suitable for ongoing development; use a regular `git clone` in that case.
 
-Make a hosts entry for talent.local.ca that points to localhost, 
-you should then be able to access the application at https://talent.local.ca/ 
+Make a hosts entry for talent.test that points to localhost, 
+you should then be able to access the application at https://talent.test/ 
 (you will need to accept the self-signed certificate).
 
 Once this is all set up, development commands can be run from the host system in the running talentcloud-op container. 
