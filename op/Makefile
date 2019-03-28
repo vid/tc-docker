@@ -23,6 +23,12 @@ code-sniff:
 composer-install:
 	composer install
 
+npm-install-cross-env-global:
+	npm install --global cross-env
+
+npm-install-no-bin-links:
+	npm install --no-bin-links
+
 npm-install:
 	npm install
 
