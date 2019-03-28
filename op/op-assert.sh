@@ -9,12 +9,7 @@ else
     mkdir /var/log/nginx/
   fi && \
   # FIXME commands other than gen-certs should be run as non-root user
-  if [ "${DOCKER_TOOLBOX_INSTALL_PATH}" ]; then
-    # For Docker Toolbox
-    make gen-certs env composer-install laravel-init fresh-db fake-data npm-cross-env npm-install npm-dev
-  else
-    make gen-certs env composer-install laravel-init fresh-db fake-data npm-install-cross-env-global npm-install-no-bin-links npm-dev
-  fi && \
+  make gen-certs env composer-install laravel-init fresh-db fake-data npm-install-cross-env-global npm-install npm-dev && \
   for i in storage bootstrap/cache; do
     chgrp -R www-data $BASE/$i && \
     chmod -R g+rxws $BASE/$i
