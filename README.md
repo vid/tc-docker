@@ -71,9 +71,14 @@ Get shell access to the primary container
 docker exec -it talentcloud-op sh
 ```
 
-Restart Docker
+Restart Docker (Windows and OSX)
 ```
 docker-machine restart
+```
+
+Restart Docker (Linux)
+```
+sudo service docker restart
 ```
 
 Purge all stopped containers
