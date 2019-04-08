@@ -23,6 +23,12 @@ code-sniff:
 composer-install:
 	composer install
 
+npm-install-cross-env-global:
+	npm install --global cross-env
+
+npm-install-no-bin-links:
+	npm install --no-bin-links
+
 npm-install:
 	npm install
 
@@ -39,7 +45,7 @@ fresh-db:
 	php artisan migrate:fresh
 
 gen-certs:
-	OPENSSL_CONF=/usr/src/php/ext/openssl/tests/openssl.cnf openssl req -nodes -x509 -newkey rsa:4096 -keyout ${APPROOT}/etc/ssl/server.key -out ${APPROOT}/etc/ssl/server.pem -days 365 -subj "/C=US/ST=Ontario/L=Ottawa/O=Localhost/OU=Org/CN=talent.local.ca"
+	OPENSSL_CONF=/usr/src/php/ext/openssl/tests/openssl.cnf openssl req -nodes -x509 -newkey rsa:4096 -keyout ${APPROOT}/etc/ssl/server.key -out ${APPROOT}/etc/ssl/server.pem -days 365 -subj "/C=US/ST=Ontario/L=Ottawa/O=Localhost/OU=Org/CN=talent.test"
 
 laravel-init:
 	php artisan key:generate

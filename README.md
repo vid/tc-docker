@@ -28,8 +28,8 @@ $ docker-compose up
 
 You can setup talent cloud in various ways by editing the `.env` the following instructions are for if you are using the default environment configuration.
 
-Make a hosts entry for talent.local.ca that points to localhost, 
-you should then be able to access the application at https://talent.local.ca/ 
+Make a hosts entry for talent.test that points to localhost, 
+you should then be able to access the application at https://talent.test/ 
 (you will need to accept the self-signed certificate).
 
 ## Useful Docker Commands
