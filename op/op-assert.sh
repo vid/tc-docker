@@ -5,6 +5,9 @@ if [ -f $BASE/.setup ]; then
   echo -n talentcloud has a setup file from `cat $BASE/.setup`
 else
   echo "running talentcloud-op setup via op-assert.sh"
+  if [ "$CI" == 'true' ] && [ ! -z "$CI_BRANCH" ] ; then
+    git checkout --single-branch --branch https://github.com/GCTC-NTGC/TalentCloud.git
+  fi
   if [ ! -d /var/log/nginx ]; then
     mkdir /var/log/nginx/
   fi && \
@@ -18,4 +21,8 @@ else
 fi
 
 # wait around for op commands
-sleep 365d
+if [ "$CI" == 'true' ] ; then 
+  make test-stack
+else
+  sleep 365d; 
+fi
