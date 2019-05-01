@@ -13,7 +13,7 @@ clean:
 	rm -Rf report/*
 
 env:
-	cp /opt/TalentCloud/.env.example ${APPROOT}/var/www/.env
+	cp ${APPROOT}/.env.example ${APPROOT}/var/www/.env
 
 code-sniff:
 	./vendor/bin/phpcs --config-set ignore_errors_on_exit 1
@@ -51,12 +51,9 @@ laravel-init:
 	php artisan key:generate
 
 phpmd:
-	./vendor/bin/phpmd ./app html codesize,naming,unusedcode --reportfile report/phpmd.html --ignore-violations-on-exit
+	./vendor/bin/phpmd ./app html codesize,naming,unusedcode --reportfile /opt/TalentCloud/reports/phpmd.xml --ignore-violations-on-exit
 
 phpunit:
-	vendor/bin/phpunit --coverage-clover=coverage.xml
+	vendor/bin/phpunit --coverage=/opt/TalentCloud/reports/phpunit-clover-coverage.xml --log-junit /opt/TalentCloud/reports/phpunit-test-results.xml
 
 test-all: code-sniff phpmd phpunit
-
-.PHONY: build-db clean code-sniff composer-install docker-start docker-stop fake-data fresh-db gen-certs laravel-init logs phpmd phpunit test-all
-

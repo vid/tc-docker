@@ -1,1 +1,2 @@
-BASE=/opt/TalentCloud/var/www
+APPROOT=/opt/TalentCloud
+WEBROOT=$APPROOT/var/www

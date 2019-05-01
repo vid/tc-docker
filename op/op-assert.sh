@@ -8,7 +8,7 @@ fi && \
 # FIXME commands other than gen-certs should be run as non-root user
 make gen-certs env composer-install laravel-init fresh-db fake-data npm-install-cross-env-global npm-install npm-dev && \
 for i in storage bootstrap/cache; do
-  chgrp -R www-data $BASE/$i && \
-  chmod -R g+rxws $BASE/$i
+  chgrp -R www-data $WEBROOT/$i && \
+  chmod -R g+rxws $WEBROOT/$i
 done && \
-date > $BASE/.setup
+date > $WEBROOT/.setup
