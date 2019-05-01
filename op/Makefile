@@ -54,6 +54,6 @@ phpmd:
 	./vendor/bin/phpmd ./app html codesize,naming,unusedcode --reportfile /opt/TalentCloud/reports/phpmd.xml --ignore-violations-on-exit
 
 phpunit:
-	vendor/bin/phpunit --coverage=/opt/TalentCloud/reports/phpunit-clover-coverage.xml --log-junit /opt/TalentCloud/reports/phpunit-test-results.xml
+	vendor/bin/phpunit --coverage-clover=/opt/TalentCloud/reports/phpunit-coverage-clover.xml --log-junit /opt/TalentCloud/reports/phpunit-junit.xml
 
 test-all: code-sniff phpmd phpunit

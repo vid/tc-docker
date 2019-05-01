@@ -12,3 +12,9 @@ steps:
   inputs:
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeCommand: 'run talentcloud-op /opt/TalentCloud/test-fullstack.sh master'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/*-junit.xml'
+    searchFolder: /opt/TalentCloud/reports/
