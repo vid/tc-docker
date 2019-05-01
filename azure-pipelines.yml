@@ -8,7 +8,7 @@ variables:
 
 steps:
 - task: DockerCompose@0
-  displayName: 'Run a Docker Compose command'
+  displayName: 'Run test-fullstack in Docker Compose'
   inputs:
     dockerComposeFile: 'docker-compose.yml'
-    dockerComposeCommand: 'up'
+    dockerComposeCommand: 'run talentcloud-op /opt/TalentCloud/test-fullstack.sh master'

@@ -18,11 +18,16 @@ services:
             - "./TalentCloud/:/opt/TalentCloud/var/www"
             - "logs:/var/log"
             - "./op/Makefile:/opt/TalentCloud/var/www/Makefile:ro"
+            - "./op/test-fullstack.sh:/opt/TalentCloud/test-fullstack.sh:ro"
             - "./op/op-assert.sh:/opt/TalentCloud/op-assert.sh:ro"
+            - "./op/up.sh:/opt/TalentCloud/up.sh:ro"
+            - "./op/env:/opt/TalentCloud/env:ro"
             - "./op/.env.example:/opt/TalentCloud/.env.example:ro"
         environment:
             - "DB_PORT=5432"
             - "DB_HOST=postgres"
+            - CI
+            - CI_BRANCH
     # The TalentCloud application (PHP-FPM)
     talentcloud:
         # DEBUGGING normally this container can just use the image
@@ -47,6 +52,7 @@ services:
         environment:
             - "DB_PORT=5432"
             - "DB_HOST=postgres"
+            - CI
         ports:
             - "9000:9000"
     # The web server (nginx)
@@ -68,6 +74,8 @@ services:
             - talentcloud
         links:
             - talentcloud
+        environment:
+            - CI
         ports:
             - "80:80"
             - "443:443"
