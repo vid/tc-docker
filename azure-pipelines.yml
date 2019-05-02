@@ -9,8 +9,8 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: ${azureSubscription}
-    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/${azureSubscriptionId}/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    azureSubscription: $razureSubscription)
+    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/$(azureSubscriptionId)/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Build services'
 
@@ -29,7 +29,7 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: ${azureSubscription}
-    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/${azureSubscriptionId}/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    azureSubscription: $(azureSubscription)
+    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/$(azureSubscriptionId)/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Push services'
