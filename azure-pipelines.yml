@@ -2,11 +2,15 @@
 pool:
   name: Hosted Ubuntu 1604
 
-variables:
-  CI: true
-  CI_BRANCH: master
-
 steps:
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: ${azureSubscription}
+    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/${azureSubscriptionId}/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Build services'
+
 - task: DockerCompose@0
   displayName: 'Run test-fullstack in Docker Compose'
   inputs:
@@ -22,7 +26,7 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Free Trial (0539e475-854e-4046-8ce5-5757e376c655)'
-    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/0539e475-854e-4046-8ce5-5757e376c655/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    azureSubscription: ${azureSubscription}
+    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/${azureSubscriptionId}/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Push services'
