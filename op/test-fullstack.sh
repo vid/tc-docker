@@ -13,7 +13,10 @@ git clone --single-branch --branch $CI_BRANCH https://github.com/GCTC-NTGC/Talen
 cp -r TalentCloud/. . && /
 rmdir TalentCloud && /
 
-/opt/TalentCloud/op-assert.sh && \
+$APPROOT/op-assert.sh && \
+cp $APPROOT/*junit.xml $APPROOT/reports/
 make test-all
+ls $APPROOT/reports/
+
 
 echo "tests finished"
