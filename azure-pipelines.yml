@@ -18,3 +18,11 @@ steps:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/*-junit.xml'
     searchFolder: /opt/TalentCloud/reports/
+
+- task: DockerCompose@1
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Free Trial (0539e475-854e-4046-8ce5-5757e376c655)'
+    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/0539e475-854e-4046-8ce5-5757e376c655/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Push services'
