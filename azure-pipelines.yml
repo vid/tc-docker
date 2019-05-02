@@ -2,6 +2,9 @@
 pool:
   name: Hosted Ubuntu 1604
 
+variables:
+- group: tc-build-variables
+
 steps:
 - task: DockerCompose@0
   inputs:
