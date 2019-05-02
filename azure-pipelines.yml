@@ -16,16 +16,6 @@ steps:
     action: 'Build services'
 
 - task: DockerCompose@0
-  displayName: Build services
-  inputs:
-    action: Build services
-    azureContainerRegistry: $(azureContainerRegistry)
-    dockerComposeFile: docker-compose.yml
-    projectName: $(Build.Repository.Name)
-    qualifyImageNames: true
-    additionalImageTags: $(Build.BuildId)
-
-- task: DockerCompose@0
   displayName: 'Run test-fullstack in Docker Compose'
   inputs:
     dockerComposeFile: '**/docker-compose.yml'
