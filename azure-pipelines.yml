@@ -7,6 +7,7 @@ variables:
 
 steps:
 - task: DockerCompose@0
+  displayName: 'Build services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: $(azureSubscription)
@@ -15,9 +16,24 @@ steps:
     action: 'Build services'
 
 - task: DockerCompose@0
+  displayName: Build services
+  inputs:
+    action: Build services
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureContainerRegistry: $(azureContainerRegistry)
+    dockerComposeFile: docker-compose.yml
+    projectName: $(Build.Repository.Name)
+    qualifyImageNames: true
+    additionalImageTags: $(Build.BuildId)
+
+- task: DockerCompose@0
   displayName: 'Run test-fullstack in Docker Compose'
   inputs:
-    dockerComposeFile: 'docker-compose.yml'
+    dockerComposeFile: '**/docker-compose.yml'
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: $(azureSubscription)
+    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/$(azureSubscriptionId)/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    action: 'Run a Docker Compose command'
     dockerComposeCommand: 'run talentcloud-op /opt/TalentCloud/test-fullstack.sh master'
 
 - task: PublishTestResults@2
@@ -27,6 +43,7 @@ steps:
     searchFolder: /opt/TalentCloud/reports/
 
 - task: DockerCompose@0
+  displayName: 'Push services to registry'
   inputs:
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: $(azureSubscription)
