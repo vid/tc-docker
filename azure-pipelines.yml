@@ -19,7 +19,7 @@ steps:
     testResultsFiles: '**/*-junit.xml'
     searchFolder: /opt/TalentCloud/reports/
 
-- task: DockerCompose@1
+- task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: 'Free Trial (0539e475-854e-4046-8ce5-5757e376c655)'
