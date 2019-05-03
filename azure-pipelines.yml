@@ -10,7 +10,7 @@ steps:
   displayName: 'Build services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: $(azureSubscription)
+    azureSubscriptionEndpoint: 'tc-docker-service-connection-gui'
     azureContainerRegistry: 'tcdockeracr'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Build services'
@@ -20,7 +20,7 @@ steps:
   inputs:
     dockerComposeFile: '**/docker-compose.yml'
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: $(azureSubscription)
+    azureSubscriptionEndpoint: 'tc-docker-service-connection-gui'
     azureContainerRegistry: 'tcdockeracr'
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'run talentcloud-op /opt/TalentCloud/test-fullstack.sh master'
