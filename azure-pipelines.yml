@@ -35,7 +35,7 @@ steps:
   displayName: 'Push services to registry'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: $(azureSubscription)
+    azureSubscriptionEndpoint: 'tc-docker-service-connection-gui'
     azureContainerRegistry: 'tcdockeracr'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Push services'
