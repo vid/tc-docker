@@ -11,7 +11,7 @@ steps:
   inputs:
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: $(azureSubscription)
-    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/$(azureSubscriptionId)/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    azureContainerRegistry: 'tcdockeracr'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Build services'
 
@@ -21,7 +21,7 @@ steps:
     dockerComposeFile: '**/docker-compose.yml'
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: $(azureSubscription)
-    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/$(azureSubscriptionId)/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    azureContainerRegistry: 'tcdockeracr'
     action: 'Run a Docker Compose command'
     dockerComposeCommand: 'run talentcloud-op /opt/TalentCloud/test-fullstack.sh master'
 
@@ -36,6 +36,6 @@ steps:
   inputs:
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: $(azureSubscription)
-    azureContainerRegistry: '{"loginServer":"tcdockeracr.azurecr.io", "id" : "/subscriptions/$(azureSubscriptionId)/resourceGroups/tc-docker-rg/providers/Microsoft.ContainerRegistry/registries/tcdockeracr"}'
+    azureContainerRegistry: 'tcdockeracr'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Push services'
