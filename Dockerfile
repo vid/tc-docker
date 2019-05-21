@@ -30,6 +30,10 @@ RUN apk update && apk upgrade && \
   apk del .build-dependencies && \
   rm -rf /var/cache/apk/*
 
-WORKDIR /var/www
-CMD ["/opt/TalentCloud/up.sh"]
+COPY etc/php/php.ini /etc/php/
+COPY op /opt/TalentCloud/op/
+
+WORKDIR /opt/TalentCloud/
+CMD ["/opt/TalentCloud/op/up.sh"]
+#CMD ["sleep", "1000000"]
 

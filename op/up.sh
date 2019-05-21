@@ -1,7 +1,7 @@
 #!/bin/sh
 
-. /opt/TalentCloud/env
+. /opt/TalentCloud/op/env
 if [ ! -f $WEBROOT/.setup ]; then
-  /opt/TalentCloud/op-assert.sh
+  $OPROOT/op-assert.sh ${DEFAULT_BRANCH}
 fi
 sleep 365d; 

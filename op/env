@@ -1,2 +1,4 @@
 APPROOT=/opt/TalentCloud
+OPROOT=$APPROOT/op
 WEBROOT=$APPROOT/var/www
+DEFAULT_BRANCH=dev

@@ -1,6 +1,7 @@
 # Makefile for Docker Nginx PHP Composer
 
 APPROOT=/opt/TalentCloud
+OPROOT=${APPROOT}/op
 
 build-db:
 	php artisan migrate"
@@ -9,11 +10,11 @@ build-db:
 clean:
 	rm -Rf vendor/
 	rm -Rf composer.lock
-	rm -Rf etc/ssl/*
+	rm -Rf $APPROOT/ssl/*
 	rm -Rf report/*
 
 env:
-	cp ${APPROOT}/.env.example ${APPROOT}/var/www/.env
+	cp ${OPROOT}/.env.example ${APPROOT}/var/www/.env
 
 code-sniff:
 	./vendor/bin/phpcs --config-set ignore_errors_on_exit 1
@@ -45,7 +46,7 @@ fresh-db:
 	php artisan migrate:fresh
 
 gen-certs:
-	OPENSSL_CONF=/usr/src/php/ext/openssl/tests/openssl.cnf openssl req -nodes -x509 -newkey rsa:4096 -keyout ${APPROOT}/etc/ssl/server.key -out ${APPROOT}/etc/ssl/server.pem -days 365 -subj "/C=US/ST=Ontario/L=Ottawa/O=Localhost/OU=Org/CN=talent.test"
+	OPENSSL_CONF=/usr/src/php/ext/openssl/tests/openssl.cnf openssl req -nodes -x509 -newkey rsa:4096 -keyout ${APPROOT}/ssl/server.key -out ${APPROOT}/ssl/server.pem -days 365 -subj "/C=US/ST=Ontario/L=Ottawa/O=Localhost/OU=Org/CN=talent.test"
 
 laravel-init:
 	php artisan key:generate

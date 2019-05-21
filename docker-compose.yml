@@ -7,54 +7,50 @@ services:
     talentcloud-op:
         build:
             context: .
-            dockerfile: op/Dockerfile
+            dockerfile: Dockerfile
         image: talentcloud-op
         container_name: talentcloud-op
-        working_dir: /opt/TalentCloud/var/www
+        working_dir: /opt/TalentCloud/
         #        restart: always
         volumes:
-            - "./etc/ssl:/opt/TalentCloud/etc/ssl"
-            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
-            - "./TalentCloud/:/opt/TalentCloud/var/www"
+#            - "./etc/ssl:/opt/TalentCloud/etc/ssl"
+#            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+#            - "./TalentCloud/:/opt/TalentCloud/var/www"
+#            - "./op/Makefile:/opt/TalentCloud/var/www/Makefile:ro"
+#            - "./op/test-fullstack.sh:/opt/TalentCloud/test-fullstack.sh:ro"
+#            - "./op/op-assert.sh:/opt/TalentCloud/op-assert.sh:ro"
+#            - "./op/up.sh:/opt/TalentCloud/up.sh:ro"
+#            - "./op/env:/opt/TalentCloud/env:ro"
+#            - "./op/.env.example:/opt/TalentCloud/.env.example:ro"
+            - "ssl:/opt/TalentCloud/ssl"
             - "logs:/var/log"
             - "reports:/opt/TalentCloud/reports"
-            - "./op/Makefile:/opt/TalentCloud/var/www/Makefile:ro"
-            - "./op/test-fullstack.sh:/opt/TalentCloud/test-fullstack.sh:ro"
-            - "./op/op-assert.sh:/opt/TalentCloud/op-assert.sh:ro"
-            - "./op/up.sh:/opt/TalentCloud/up.sh:ro"
-            - "./op/env:/opt/TalentCloud/env:ro"
-            - "./op/.env.example:/opt/TalentCloud/.env.example:ro"
+            - "TalentCloud:/opt/TalentCloud/var/www"
         environment:
             - "DB_PORT=5432"
             - "DB_HOST=postgres"
-            - CI
-            - CI_BRANCH
         depends_on:
             - talentcloud
             - postgres
     # The TalentCloud application (PHP-FPM)
     talentcloud:
-        # DEBUGGING normally this container can just use the image
+        # DEBUGGING without wait-for-setup, this container can just use the image
         #        image: php:7.2-fpm-alpine3.7
         build:
             context: .
             dockerfile: Dockerfile-talentcloud
-        #image: gctcntgc/talentcloud
-        #        image: tc2_gctcntgc/talentcloud
-        #        container_name: talentcloud
-        #working_dir: /var/www
-        working_dir: /opt/TalentCloud
+        working_dir: /var/www/
         #        restart: always
         volumes:
-            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
-            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini:rw"
-            - "./etc/php-fpm.d/zz-logs.conf:/usr/local/etc/php-fpm.d/zz-logs.conf:ro"
-            - "./TalentCloud/:/var/www"
+#            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
+#            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini:rw"
+#            - "./etc/php-fpm.d/zz-logs.conf:/usr/local/etc/php-fpm.d/zz-logs.conf:ro"
+#            - "./TalentCloud/:/var/www"
             - "logs:/var/log"
+            - "TalentCloud:/var/www/"
         environment:
             - "DB_PORT=5432"
             - "DB_HOST=postgres"
-            - CI
         ports:
             - "9000:9000"
     # The web server (nginx)
@@ -64,34 +60,34 @@ services:
             dockerfile: Dockerfile-nginx
         #        image: nginx:1.13.9-alpine
         container_name: nginx-setup
-        working_dir: /opt/TalentCloud
+        working_dir: /var/www/
         restart: always
         volumes:
-            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
-            - "./etc/ssl:/etc/ssl"
-            - "./TalentCloud/:/var/www"
-            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
+#            - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+#            - "./etc/ssl:/etc/ssl"
+#            - "./TalentCloud/:/var/www"
+#            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
+            # needed for .setup signalling
+            - "TalentCloud:/var/www"
+            - "ssl:/opt/TalentCloud/ssl"
             - "logs:/var/log"
-        environment:
-            - CI
         ports:
             - "80:80"
             - "443:443"
     # The database (Postgres)
     postgres:
         image: postgres:9.6-alpine
-        working_dir: /opt/TalentCloud
         restart: always
         volumes:
+#            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
             - "pgdata:/var/lib/postgresql/data"
-            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
             - "logs:/var/log"
         environment:
             - "POSTGRES_DB=talentcloud"
             - "POSTGRES_USER=talentcloud"
             - "POSTGRES_PASSWORD=talentcloud"
         ports:
-            - "5434-5432"
+            - "5432-5434"
     # Adminer
     adminer:
         image: adminer
@@ -105,3 +101,5 @@ volumes:
     pgdata:
     logs:
     reports:
+    ssl:
+    TalentCloud:
