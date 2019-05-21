@@ -1,3 +1,5 @@
-#!/bin/sh
+#!/bin/sh -x
 
-make -f $OPROOT/Makefile clean gen-certs env composer-install laravel-init fresh-db fake-data npm-install-cross-env-global npm-install npm-dev && \
+. /opt/TalentCloud/op/env
+
+make -f $OPROOT/Makefile clean env composer-install laravel-init fresh-db fake-data npm-install npm-dev

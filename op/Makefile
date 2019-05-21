@@ -10,7 +10,6 @@ build-db:
 clean:
 	rm -Rf vendor/
 	rm -Rf composer.lock
-	rm -Rf $APPROOT/ssl/*
 	rm -Rf report/*
 
 env:
@@ -23,9 +22,6 @@ code-sniff:
 
 composer-install:
 	composer install
-
-npm-install-cross-env-global:
-	npm install --global cross-env
 
 npm-install-no-bin-links:
 	npm install --no-bin-links
@@ -44,9 +40,6 @@ fake-data:
 
 fresh-db:
 	php artisan migrate:fresh
-
-gen-certs:
-	OPENSSL_CONF=/usr/src/php/ext/openssl/tests/openssl.cnf openssl req -nodes -x509 -newkey rsa:4096 -keyout ${APPROOT}/ssl/server.key -out ${APPROOT}/ssl/server.pem -days 365 -subj "/C=US/ST=Ontario/L=Ottawa/O=Localhost/OU=Org/CN=talent.test"
 
 laravel-init:
 	php artisan key:generate
