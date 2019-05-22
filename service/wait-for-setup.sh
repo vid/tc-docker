@@ -14,5 +14,7 @@ fi
 echo "Found setup from `cat $SETUP`, running $1"
 $1
 echo 'exited'
-echo DEBUGGING container running
-sleep 100000
+if [ "$CI" != 'true' ] ; then
+  echo DEBUGGING container running;
+  sleep 100000;
+fi

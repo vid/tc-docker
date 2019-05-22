@@ -1,6 +1,7 @@
 # Makefile for Docker Nginx PHP Composer
 
 APPROOT=/opt/TalentCloud
+OPROOT=${APPROOT}/op
 
 build-db:
 	php artisan migrate"
@@ -9,11 +10,10 @@ build-db:
 clean:
 	rm -Rf vendor/
 	rm -Rf composer.lock
-	rm -Rf etc/ssl/*
 	rm -Rf report/*
 
 env:
-	cp /opt/TalentCloud/.env.example ${APPROOT}/var/www/.env
+	cp ${OPROOT}/.env.example ${APPROOT}/var/www/.env
 
 code-sniff:
 	./vendor/bin/phpcs --config-set ignore_errors_on_exit 1
@@ -22,9 +22,6 @@ code-sniff:
 
 composer-install:
 	composer install
-
-npm-install-cross-env-global:
-	npm install --global cross-env
 
 npm-install-no-bin-links:
 	npm install --no-bin-links
@@ -44,19 +41,13 @@ fake-data:
 fresh-db:
 	php artisan migrate:fresh
 
-gen-certs:
-	OPENSSL_CONF=/usr/src/php/ext/openssl/tests/openssl.cnf openssl req -nodes -x509 -newkey rsa:4096 -keyout ${APPROOT}/etc/ssl/server.key -out ${APPROOT}/etc/ssl/server.pem -days 365 -subj "/C=US/ST=Ontario/L=Ottawa/O=Localhost/OU=Org/CN=talent.test"
-
 laravel-init:
 	php artisan key:generate
 
 phpmd:
-	./vendor/bin/phpmd ./app html codesize,naming,unusedcode --reportfile report/phpmd.html --ignore-violations-on-exit
+	./vendor/bin/phpmd ./app html codesize,naming,unusedcode --reportfile /opt/TalentCloud/reports/phpmd.xml --ignore-violations-on-exit
 
 phpunit:
-	vendor/bin/phpunit --coverage-clover=coverage.xml
+	vendor/bin/phpunit --coverage-clover=/opt/TalentCloud/reports/phpunit-coverage-clover.xml --log-junit /opt/TalentCloud/reports/phpunit-junit.xml
 
 test-all: code-sniff phpmd phpunit
-
-.PHONY: build-db clean code-sniff composer-install docker-start docker-stop fake-data fresh-db gen-certs laravel-init logs phpmd phpunit test-all
-

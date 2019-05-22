@@ -4,4 +4,8 @@ RUN apk update && apk upgrade && \
   postgresql-dev && \
   docker-php-ext-install pgsql pdo_pgsql
 
-CMD ["./wait-for-setup.sh", "php-fpm"]
+COPY service/wait-for-setup.sh /usr/local/bin/
+COPY etc/php/php.ini /etc/php/
+COPY etc/php-fpm.d/* /etc/php-fpm.d/
+
+CMD ["/usr/local/bin/wait-for-setup.sh", "php-fpm"]
