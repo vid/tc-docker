@@ -33,7 +33,7 @@ spec:
         - mountPath: /var/log
           name: logs
         - mountPath: /var/www/
-          name: TalentCloud
+          name: talentcloud
         workingDir: /var/www/
       restartPolicy: Always
       volumes:
