@@ -1,0 +1,54 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: talentcloud-op
+  name: talentcloud-op
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: talentcloud-op
+    spec:
+      containers:
+      - env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+        image: talentcloud-op
+        name: talentcloud-op
+        resources: {}
+        volumeMounts:
+        - mountPath: /opt/TalentCloud/ssl
+          name: ssl
+        - mountPath: /var/log
+          name: logs
+        - mountPath: /opt/TalentCloud/reports
+          name: reports
+        - mountPath: /opt/TalentCloud/var/www
+          name: TalentCloud
+        workingDir: /opt/TalentCloud/
+      restartPolicy: Always
+      volumes:
+      - name: ssl
+        persistentVolumeClaim:
+          claimName: ssl
+      - name: logs
+        persistentVolumeClaim:
+          claimName: logs
+      - name: reports
+        persistentVolumeClaim:
+          claimName: reports
+      - name: TalentCloud
+        persistentVolumeClaim:
+          claimName: TalentCloud
+status: {}
