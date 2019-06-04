@@ -76,8 +76,11 @@ services:
             - "443:443"
     # The database (Postgres)
     postgres:
-        Dockerfile: Dockerfile-postgres
-        image: postgres:9.6-alpine
+        build: 
+            context: .
+            Dockerfile: Dockerfile-postgres
+        container_name: postgres
+#        image: postgres:9.6-alpine
         restart: always
         volumes:
 #            - "./wait-for-setup.sh:/opt/TalentCloud/wait-for-setup.sh"
