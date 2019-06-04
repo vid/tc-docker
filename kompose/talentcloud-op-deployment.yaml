@@ -35,7 +35,7 @@ spec:
         - mountPath: /opt/TalentCloud/reports
           name: reports
         - mountPath: /opt/TalentCloud/var/www
-          name: TalentCloud
+          name: talentcloud
         workingDir: /opt/TalentCloud/
       restartPolicy: Always
       volumes:
@@ -48,7 +48,7 @@ spec:
       - name: reports
         persistentVolumeClaim:
           claimName: reports
-      - name: TalentCloud
+      - name: talentcloud
         persistentVolumeClaim:
-          claimName: TalentCloud
+          claimName: talentcloud
 status: {}

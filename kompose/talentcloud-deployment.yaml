@@ -40,7 +40,7 @@ spec:
       - name: logs
         persistentVolumeClaim:
           claimName: logs
-      - name: TalentCloud
+      - name: talentcloud
         persistentVolumeClaim:
-          claimName: TalentCloud
+          claimName: talentcloud
 status: {}

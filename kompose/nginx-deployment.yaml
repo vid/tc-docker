@@ -27,7 +27,7 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /var/www
-          name: TalentCloud
+          name: talentcloud
         - mountPath: /opt/TalentCloud/ssl
           name: ssl
         - mountPath: /var/log
@@ -35,9 +35,9 @@ spec:
         workingDir: /var/www/
       restartPolicy: Always
       volumes:
-      - name: TalentCloud
+      - name: talentcloud
         persistentVolumeClaim:
-          claimName: TalentCloud
+          claimName: talentcloud
       - name: ssl
         persistentVolumeClaim:
           claimName: ssl

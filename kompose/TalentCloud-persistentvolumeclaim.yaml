@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: TalentCloud
-  name: TalentCloud
+  name: talentcloud
 spec:
   accessModes:
   - ReadWriteOnce
