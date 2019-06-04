@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: TalentCloud
+    io.kompose.service: talentcloud
   name: talentcloud
 spec:
   accessModes:
