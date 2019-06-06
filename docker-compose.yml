@@ -39,6 +39,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-talentcloud
+        image: talentcloud
         working_dir: /var/www/
         #        restart: always
         volumes:
@@ -59,6 +60,7 @@ services:
             context: .
             dockerfile: Dockerfile-nginx
         #        image: nginx:1.13.9-alpine
+        image: nginx
         container_name: nginx-setup
         working_dir: /var/www/
         restart: always
@@ -76,9 +78,11 @@ services:
             - "443:443"
     # The database (Postgres)
     postgres:
+    # Azure pipelines build requires a docker file in some cases for use in their repository.
         build: 
             context: .
             dockerfile: Dockerfile-postgres
+        image: postggres
         container_name: postgres
 #        image: postgres:9.6-alpine
         restart: always
