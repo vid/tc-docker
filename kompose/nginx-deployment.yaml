@@ -19,8 +19,8 @@ spec:
         io.kompose.service: nginx
     spec:
       containers:
-      - image: nginx
-        name: nginx-setup
+      - name: nginx
+        image: june10k8sacr.azurecr.io/nginx
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -34,6 +34,8 @@ spec:
           name: logs
         workingDir: /var/www/
       restartPolicy: Always
+      imagePullSecrets:
+        - name: aks-login
       volumes:
       - name: talentcloud
         persistentVolumeClaim:

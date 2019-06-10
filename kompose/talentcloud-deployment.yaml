@@ -19,13 +19,8 @@ spec:
         io.kompose.service: talentcloud
     spec:
       containers:
-      - env:
-        - name: DB_HOST
-          value: postgres
-        - name: DB_PORT
-          value: "5432"
-        image: talentcloud
-        name: talentcloud
+      - name: talentcloud
+        image: june10k8sacr.azurecr.io/talentcloud
         ports:
         - containerPort: 9000
         resources: {}
@@ -36,6 +31,8 @@ spec:
           name: talentcloud
         workingDir: /var/www/
       restartPolicy: Always
+      imagePullSecrets:
+        - name: aks-login
       volumes:
       - name: logs
         persistentVolumeClaim:

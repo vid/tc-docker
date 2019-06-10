@@ -19,13 +19,14 @@ spec:
         io.kompose.service: talentcloud-op
     spec:
       containers:
-      - env:
+      - name: talentcloud-op
+        image: june10k8sacr.azurecr.io/talentcloud-op
+        workingDir: /opt/TalentCloud/
+        env:
         - name: DB_HOST
           value: postgres
         - name: DB_PORT
           value: "5432"
-        image: june10k8sacr.azurecr.io/talentcloud-op
-        name: talentcloud-op
         resources: {}
         volumeMounts:
         - mountPath: /opt/TalentCloud/ssl
@@ -36,8 +37,9 @@ spec:
           name: reports
         - mountPath: /opt/TalentCloud/var/www
           name: talentcloud
-        workingDir: /opt/TalentCloud/
       restartPolicy: Always
+      imagePullSecrets:
+        - name: aks-login
       volumes:
       - name: ssl
         persistentVolumeClaim:
