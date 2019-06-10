@@ -24,7 +24,7 @@ spec:
           value: postgres
         - name: DB_PORT
           value: "5432"
-        image: talentcloud-op
+        image: june10k8sacr.azurecr.io/talentcloud-op
         name: talentcloud-op
         resources: {}
         volumeMounts:
