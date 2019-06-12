@@ -34,7 +34,7 @@ spec:
         - containerPort: 5434
         resources: {}
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
+        - mountPath: /var/lib/postgresql/
           name: pgdata
         - mountPath: /var/log
           name: logs
