@@ -1,22 +1,20 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f ../docker-compose.yml
-    kompose.version: 1.18.0 (06a2e56)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: talentcloud
   name: talentcloud
 spec:
+  selector:
+    matchLabels:
+      app: talentcloud
+      tier: backend
+      track: stable
   replicas: 1
-  strategy:
-    type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: talentcloud
+        app: talentcloud
+        tier: backend
+        track: stable
     spec:
       containers:
       - name: talentcloud
@@ -30,6 +28,11 @@ spec:
         - mountPath: /var/www/
           name: talentcloud
         workingDir: /var/www/
+        env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
       restartPolicy: Always
       imagePullSecrets:
         - name: aks-login

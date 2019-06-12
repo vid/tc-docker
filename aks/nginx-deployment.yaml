@@ -1,22 +1,20 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f ../docker-compose.yml
-    kompose.version: 1.18.0 (06a2e56)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: nginx
   name: nginx
 spec:
+  selector:
+    matchLabels:
+      app: talentcloud
+      tier: frontend
+      track: stable
   replicas: 1
-  strategy:
-    type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: nginx
+        app: talentcloud
+        tier: frontend
+        track: stable
     spec:
       containers:
       - name: nginx
